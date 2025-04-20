@@ -3,13 +3,25 @@ services:
     name: tib-backgammon
     env: node
     plan: free
+
+    # -------------------
+    #  Build everything
+    # -------------------
     buildCommand: |
+      # 1. Build the React client
       cd client
       npm ci
       npm run build
+
+      # 2. Install server dependencies
       cd ../server
       npm ci
 
+    # ------------------------------------------
+    #  When Render runs your service at runtime,
+    #  it will execute this command
+    # ------------------------------------------
     startCommand: |
+      # Go into server/, then launch
       cd server
       npm start
