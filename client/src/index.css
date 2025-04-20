@@ -1,0 +1,15 @@
+body {
+  margin: 0;
+  font-family: sans-serif;
+}
+header {
+  display: flex;
+  align-items: center;
+  padding: 8px;
+  background: #222;
+  color: #fff;
+}
+header img {
+  height: 32px;
+  margin-right: 12px;
+}
