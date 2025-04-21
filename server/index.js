@@ -1,7 +1,8 @@
 const path = require('path');
 const express = require('express');
 const { Server } = require('boardgame.io/server');
-const { Backgammon } = require('boardgame.io/examples/src/games/backgammon');
+// ← point at our vendored game logic
+const { Backgammon } = require('./vendor/backgammon');
 
 const bgServer = Server({
   games: [Backgammon],
@@ -10,10 +11,10 @@ const bgServer = Server({
 
 const app = bgServer.app;
 
-// Serve React build
+// Serve the React build
 app.use(express.static(path.join(__dirname, '../client/build')));
 
-// Always serve index.html for client‐side routing
+// Always return index.html so client-side routing works
 app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, '../client/build/index.html'));
 });
