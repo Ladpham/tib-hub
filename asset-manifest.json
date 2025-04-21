@@ -1,0 +1,13 @@
+{
+  "files": {
+    "main.css": "/tib-hub/static/css/main.da05ff44.css",
+    "main.js": "/tib-hub/static/js/main.27c7d178.js",
+    "index.html": "/tib-hub/index.html",
+    "main.da05ff44.css.map": "/tib-hub/static/css/main.da05ff44.css.map",
+    "main.27c7d178.js.map": "/tib-hub/static/js/main.27c7d178.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.da05ff44.css",
+    "static/js/main.27c7d178.js"
+  ]
+}
