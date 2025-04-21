@@ -1,78 +1,96 @@
-// A very simple React UI for our Backgammon logic.
-// Save this as client/src/vendor/Board.js
+// client/src/vendor/Board.js
 
 import React from 'react';
 import PropTypes from 'prop-types';
+// 1) Import your new board CSS or a board‐drawing component
+import './Board.css';
+
+// 2) Import dice image assets from public/
+const diceImages = {
+  1: '/dice‑1.png',
+  2: '/dice‑2.png',
+  // …through 6
+};
 
 export default function Board({ G, ctx, moves, playerID }) {
+  // 3) Helper to compute legal moves for a given point
+  function getLegalDestinations(fromIdx) {
+    return G.dice
+      .map((die) => {
+        const toIdx = playerID === '0' ? fromIdx + die : fromIdx - die;
+        // replicate your legality check here:
+        if (toIdx >= 0 && toIdx < 24) return toIdx;
+        return null;
+      })
+      .filter((idx) => idx !== null);
+  }
+
   return (
-    <div style={{ padding: '16px', fontFamily: 'sans-serif' }}>
+    <div className="board‑container">
       <h2>TIB Backgammon — Player {playerID}</h2>
 
-      {/* Simple 2×12 grid of points */}
-      <div
-        style={{
-          display: 'grid',
-          gridTemplateColumns: 'repeat(12, 40px)',
-          gridGap: '4px',
-          marginBottom: '16px',
-        }}
-      >
-        {G.points.map((pt, idx) => (
-          <div
-            key={idx}
-            style={{
-              width: '40px',
-              height: '60px',
-              border: '1px solid #333',
-              background: pt.player === playerID ? '#8f8' : pt.player ? '#f88' : '#eee',
-              position: 'relative',
-              cursor: 'pointer',
-            }}
-            onClick={() => {
-              // If you click a point when dice are rolled, try to move.
-              // We assume you clicked a single checker there and target an end point:
-              const fromIdx = idx;
-              // For demo, pick first available die
-              if (G.dice.length > 0) {
-                const dist = G.dice[0];
-                const toIdx = playerID === '0' ? fromIdx + dist : fromIdx - dist;
-                moves.moveChecker(fromIdx, toIdx);
-              } else {
-                moves.rollDice();
-              }
-            }}
-          >
-            {pt.count > 0 && (
-              <div
-                style={{
-                  position: 'absolute',
-                  bottom: '4px',
-                  right: '4px',
-                  fontSize: '12px',
-                }}
-              >
-                {pt.count}
-              </div>
-            )}
-          </div>
-        ))}
+      {/* ───────────────────────────────────────────────────── 
+           REPLACE this with your own SVG/Canvas/HTML board. 
+      ───────────────────────────────────────────────────── */}
+      <div className="points‑grid">
+        {G.points.map((pt, idx) => {
+          const legal = getLegalDestinations(idx).length > 0;
+          return (
+            <div
+              key={idx}
+              className={`point ${pt.player === playerID ? 'mine' : ''} ${
+                legal ? 'legal' : ''
+              }`}
+              onClick={() => {
+                // If you’ve rolled dice, try a move,
+                // otherwise trigger the roll.
+                if (G.dice.length) {
+                  const toIdx = getLegalDestinations(idx)[0];
+                  moves.moveChecker(idx, toIdx);
+                } else {
+                  moves.rollDice();
+                }
+              }}
+            >
+              {pt.count > 0 && <span className="checker‑count">{pt.count}</span>}
+            </div>
+          );
+        })}
       </div>
 
-      {/* Dice display & roll button */}
-      <div style={{ marginBottom: '16px' }}>
-        <strong>Dice:</strong> {G.dice.join(', ')}
-        <button
-          style={{ marginLeft: '8px', padding: '4px 8px' }}
-          onClick={() => moves.rollDice()}
-          disabled={G.dice.length > 0}
-        >
-          Roll Dice
+      {/* ───────────────────────────────────────────────────── 
+           Render your dice as images, not just numbers.
+      ───────────────────────────────────────────────────── */}
+      <div className="dice‑row">
+        {G.dice.map((d, i) => (
+          <img key={i} src={diceImages[d]} alt={`Die ${d}`} className="die" />
+        ))}
+        <button onClick={() => moves.rollDice()} disabled={G.dice.length > 0}>
+          Roll
         </button>
       </div>
 
-      {/* Turn info */}
-      <div>
+      {/* ───────────────────────────────────────────────────── 
+           Add Undo and Validate buttons using boardgame.io events.
+      ───────────────────────────────────────────────────── */}
+      <div className="controls">
+        <button
+          onClick={() => ctx.events.undo()}
+          disabled={!ctx.events.undo}
+          className="undo"
+        >
+          Undo
+        </button>
+        <button
+          onClick={() => ctx.events.endTurn()}
+          disabled={G.dice.length > 0}
+          className="validate"
+        >
+          Validate Move
+        </button>
+      </div>
+
+      <div className="status">
         <em>Current Turn:</em> Player {ctx.currentPlayer}
       </div>
     </div>
