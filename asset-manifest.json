@@ -1,13 +1,13 @@
 {
   "files": {
     "main.css": "/tib-hub/static/css/main.35746ab8.css",
-    "main.js": "/tib-hub/static/js/main.d83e02c6.js",
+    "main.js": "/tib-hub/static/js/main.269e7f0a.js",
     "index.html": "/tib-hub/index.html",
     "main.35746ab8.css.map": "/tib-hub/static/css/main.35746ab8.css.map",
-    "main.d83e02c6.js.map": "/tib-hub/static/js/main.d83e02c6.js.map"
+    "main.269e7f0a.js.map": "/tib-hub/static/js/main.269e7f0a.js.map"
   },
   "entrypoints": [
     "static/css/main.35746ab8.css",
-    "static/js/main.d83e02c6.js"
+    "static/js/main.269e7f0a.js"
   ]
 }
