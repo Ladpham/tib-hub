@@ -18,7 +18,7 @@ const App = Client({
 ReactDOM.render(
   <div>
     <header>
-      <img src="/tib-logo.png" alt="TIB Logo" />
+      <img src="/logo-tib.png" alt="TIB Logo" />
       <h1>TIB Backgammon</h1>
     </header>
     <App playerID="0" matchID="TIB" />
