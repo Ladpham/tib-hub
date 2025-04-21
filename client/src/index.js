@@ -11,7 +11,7 @@ const App = Client({
   board: Board,
   numPlayers: 2,
   debug: false,
-  multiplayer: SocketIO(),          // uses same origin
+  multiplayer: SocketIO({ server: 'https://tib-hub.onrender.com' }),
   setupData: { matchID: 'TIB', target: 5 },
 });
 
