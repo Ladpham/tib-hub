@@ -1,0 +1,48 @@
+.board‑container {
+  max-width: 800px;
+  margin: auto;
+}
+
+.points‑grid {
+  display: grid;
+  grid-template-columns: repeat(12, 50px);
+  grid-gap: 4px;
+}
+
+.point {
+  width: 50px;
+  height: 80px;
+  border: 1px solid #333;
+  background: #eee;
+  position: relative;
+  cursor: pointer;
+  transition: transform 0.1s;
+}
+.point.mine { background: #c8f7c5; }
+.point.legal {
+  box-shadow: 0 0 8px rgba(0, 128, 0, 0.6);
+  transform: scale(1.1);
+}
+
+.checker‑count {
+  position: absolute;
+  bottom: 4px;
+  right: 4px;
+  font-weight: bold;
+}
+
+.dice‑row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 16px 0;
+}
+.die {
+  width: 40px;
+  height: 40px;
+}
+
+.controls button {
+  margin-right: 8px;
+  padding: 6px 12px;
+}
