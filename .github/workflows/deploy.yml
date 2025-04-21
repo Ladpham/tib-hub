@@ -1,6 +1,5 @@
 name: Deploy React app to GitHub Pages
 
-# À chaque push sur main
 on:
   push:
     branches:
@@ -9,29 +8,30 @@ on:
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
+
     steps:
-      # 1. Récupère le code
+      # 1. Checkout your repo
       - uses: actions/checkout@v3
         with:
           persist-credentials: false
 
-      # 2. Installe Node.js
+      # 2. Setup Node.js
       - uses: actions/setup-node@v3
         with:
           node-version: 18
 
-      # 3. Installe les dépendances et build dans client/
+      # 3. Install & build in client/
       - name: Install dependencies
         working-directory: client
-        run: npm ci
+        run: npm install
 
       - name: Build client
         working-directory: client
         run: npm run build
 
-      # 4. Déploie le dossier client/build sur la branche gh-pages
+      # 4. Deploy build/ to gh-pages branch
       - name: Deploy to gh-pages
         uses: JamesIves/github-pages-deploy-action@v4
         with:
-          branch: gh-pages       # branche cible
-          folder: client/build   # dossier à publier
+          branch: gh-pages
+          folder: client/build
